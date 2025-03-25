@@ -1,1 +1,26 @@
 無重複字串的最長字串
+给定一个字符串s，请找出其中不含有重复字符的最長子串的長度
+
+Ans:
+func lengthOfLongestSubstring(s string) int {
+    charIndex := make(map[byte]int) // 存儲字符最後出現的位置
+    maxLength := 0
+    left := 0 // 滑動窗口左邊界
+
+    for right := 0; right < len(s); right++ {
+        if index, found := charIndex[s[right]]; found && index >= left {
+            left = index + 1 // 縮小窗口左邊界
+        }
+        charIndex[s[right]] = right // 更新字符最後出現位置
+        maxLength = max(maxLength, right-left+1) // 計算當前窗口大小
+    }
+
+    return maxLength
+}
+
+func max(a, b int) int {
+    if a > b {
+        return a   
+    }
+    return b 
+}
